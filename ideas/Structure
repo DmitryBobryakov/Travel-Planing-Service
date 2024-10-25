@@ -1,0 +1,23 @@
+Структура проекта
+
+Vote service:
+1) User module
+  1.1) User class (информация о пользователе, друзьях)
+  1.2) UserService (управление пользователями)
+2) Voting module
+  2.1) Vote class (информация о голосовании)
+  2.2) VoteService (управление голосованиями)
+
+Notification service:
+1) Notification module
+  1.1) Notification class (информация об уведомлении, получатели и т.д)
+  1.2) NotificationService (сервис для отправки уведомлений)
+
+UI:
+1) UI module:
+  1.1) UserInterface (взаимодействие с пользователем)
+  1.2) VoteInterface (для голосований)
+
+Integration Module (предоставление MtsTravelApi)
+
+Data Storage Module (UserRepository + VoteRepository)
