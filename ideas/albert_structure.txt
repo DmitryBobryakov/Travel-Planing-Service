@@ -1,0 +1,20 @@
+Мне кажется, можно такую структуру сделать:
+
+src/main/java/travel-planning/
+├── config/
+│   └── AppConfig.java
+├── model/
+│   ├── User.java
+│   ├── Vote.java
+│   └── Notification.java
+├── repository/
+│   ├── UserRepository.java
+│   └── VoteRepository.java
+├── service/
+│   ├── UserService.java
+│   ├── VoteService.java
+│   └── NotificationService.java
+├── integration/
+│   └── MtsTravelApi.java
+└── ui/
+    └── UserInterface.java
