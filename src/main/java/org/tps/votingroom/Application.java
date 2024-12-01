@@ -1,6 +1,6 @@
-package org.example;
+package org.tps.votingroom;
 
-import org.example.Controllers.Controller;
+import org.tps.votingroom.Сontrollers.Controller;
 
 import java.util.List;
 

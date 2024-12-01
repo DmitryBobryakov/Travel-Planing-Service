@@ -1,6 +1,6 @@
-package org.example.Exceptions;
+package org.tps.votingroom.Exceptions;
 
-public class AlreadyExistingException extends RuntimeException {
+public class AlreadyExistingException extends Exception {
   public AlreadyExistingException(String message) {
     super(message);
   }

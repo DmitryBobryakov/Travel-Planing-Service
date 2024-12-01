@@ -1,3 +1,3 @@
-package org.example.Requests;
+package org.tps.votingroom.Requests;
 
 public record VoteRequest (Integer numberOfVariant) {}

@@ -1,8 +1,10 @@
-package org.example.DataBase;
+package org.tps.votingroom.DataBase;
 
-public record LineInformationDataBase (Integer ownerId, String name, Integer[] participantsId,
-                                       String[] variantsNames, Integer[] variantsInterestRate, Integer state) {
-  public LineInformationDataBase withInterestRate(Integer[] interestRate) {
+import java.util.List;
+
+public record LineInformationDataBase (Integer ownerId, String name, List<Integer> participantsId,
+                                       List<String> variantsNames, List<Integer> variantsInterestRate, Integer state) {
+  public LineInformationDataBase withInterestRate(List<Integer> interestRate) {
     return new LineInformationDataBase(ownerId, name, participantsId, variantsNames, interestRate, state);
   }
 }
