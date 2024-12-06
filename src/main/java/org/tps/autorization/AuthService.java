@@ -21,7 +21,7 @@ public class AuthService {
     public void register(String username, String password, String email, String phone) {
         // Хэширование пароля перед сохранением
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-        //Новый пользователь
+        // Новый пользователь
         User newUser = new User(0, username, hashedPassword, email, phone);
         userDao.saveUser(newUser);
     }
