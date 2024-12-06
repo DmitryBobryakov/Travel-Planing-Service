@@ -2,6 +2,8 @@ package org.tps.autorization;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.Optional;
+
 public class AuthService {
     private UserDao userDao;
 
@@ -10,12 +12,9 @@ public class AuthService {
     }
 
     public boolean authenticate(String username, String password) {
-        User user = userDao.getUserByUsername(username);
-        if (user != null) {
-            // Сравнение хэшированного пароля
-            return BCrypt.checkpw(password, user.getPassword());
-        }
-        return false;
+        Optional<User> user = userDao.getUserByUsername(username);
+      // Сравнение хэшированного пароля
+      return user.filter(value -> BCrypt.checkpw(password, value.getPassword())).isPresent();
     }
 
     public void register(String username, String password, String email, String phone) {
