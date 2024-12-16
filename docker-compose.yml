@@ -3,7 +3,7 @@ version: '3.9'
 services:
   database:
     image: postgres:17
-    container_name: postgresTSP
+    container_name: TSPpostgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: JavaMTS
