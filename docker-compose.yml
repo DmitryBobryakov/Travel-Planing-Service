@@ -1,31 +1,21 @@
 version: '3.9'
 
 services:
-  database:
-    image: postgres:14.13-alpine
-    container_name: TPS_postgres
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: JavaMTS
-      POSTGRES_DB: postgres
-    ports:
-      - "5438:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
-
-  app:
+  tps_service:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: TPS_service_app
+    container_name: tps_service_container
     environment:
-      DB_URL: jdbc:postgresql://localhost:5432/postgres
-      DB_USERNAME: postgres
-      DB_PASSWORD: JavaMTS
-    depends_on:
-      - database
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: JavaMTS
+      POSTGRES_DB: auth_service
     ports:
-      - "8080:8080"
+      - "8080:8080" # Приложение
+      - "5438:5432" # PostgreSQL
+    volumes:
+      - db_data:/var/lib/postgresql/data
 
 volumes:
   db_data:
+
