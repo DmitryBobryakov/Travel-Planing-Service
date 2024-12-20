@@ -2,8 +2,8 @@ version: '3.9'
 
 services:
   database:
-    image: postgres:17
-    container_name: TSPpostgres
+    image: postgres:14.13-alpine
+    container_name: TPS_postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: JavaMTS
@@ -17,7 +17,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: auth_service_app
+    container_name: TPS_service_app
     environment:
       DB_URL: jdbc:postgresql://localhost:5432/postgres
       DB_USERNAME: postgres
