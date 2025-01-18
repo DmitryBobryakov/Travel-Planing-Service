@@ -1,15 +1,13 @@
-package org.tps.autorization;
+package org.tps.authorization;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
-
 import spark.Spark;
 
 @Slf4j
 @AllArgsConstructor
-class LoginEndpoint {
+public class LoginEndpoint {
     private static final String APPLICATION_JSON = "application/json";
     private static final String STATUS = "status";
     private static final String MESSAGE = "message";
@@ -22,12 +20,15 @@ class LoginEndpoint {
     private UserService userService;
 
     public void setupLoginEndpoint() {
-        Spark.post("singin", (req, res) -> {
+        Spark.post("/login", (req, res) -> {
             res.type(APPLICATION_JSON);
             JSONObject responseObject = new JSONObject();
 
             try {
-                boolean authenticated = userService.authenticateUser(req.body());
+                String phone = req.queryParams("phone");
+                String password = req.queryParams("password");
+
+                boolean authenticated = userService.authenticateUser(phone, password);
                 if (authenticated) {
                     res.status(200);
                     responseObject.put(STATUS, SUCCESS);
@@ -37,8 +38,8 @@ class LoginEndpoint {
                     responseObject.put(STATUS, ERROR);
                     responseObject.put(MESSAGE, INVALID_CREDENTIALS_MESSAGE);
                 }
-            } catch (ParseException e) {
-                log.error("Ошибка парсинга запроса для входа", e);
+            } catch (Exception e) {
+                log.error("Ошибка при обработке запроса на вход", e);
                 res.status(400);
                 responseObject.put(STATUS, ERROR);
                 responseObject.put(MESSAGE, INVALID_REQUEST_FORMAT_MESSAGE);

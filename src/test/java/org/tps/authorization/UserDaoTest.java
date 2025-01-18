@@ -1,4 +1,4 @@
-package org.tps.autorization;
+package org.tps.authorization;
 
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.jupiter.api.BeforeEach;

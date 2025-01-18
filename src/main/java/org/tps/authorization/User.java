@@ -1,4 +1,4 @@
-package org.tps.autorization;
+package org.tps.authorization;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package org.tps.autorization;
+package org.tps.authorization;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

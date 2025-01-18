@@ -6,14 +6,17 @@
     <title>Регистрация</title>
 </head>
 <body>
+<#if error??>
+    <p style="color:red">${error}</p>
+</#if>
 <form action="/register" method="post">
-    <label for="phone">номер телефона</label><br>
+    <label for="phone">Номер телефона</label><br>
     <input type="text" id="phone" name="phone" required><br><br>
-    <label for="username">придумайте username</label><br>
+    <label for="username">Придумайте username</label><br>
     <input type="text" id="username" name="username" required><br><br>
-    <label for="email">почта</label><br>
+    <label for="email">Почта</label><br>
     <input type="email" id="email" name="email" required><br><br>
-    <label for="password">придумайте пароль</label><br>
+    <label for="password">Придумайте пароль</label><br>
     <input type="password" id="password" name="password" required><br><br>
     <button type="submit">Продолжить</button>
 </form>
