@@ -20,7 +20,7 @@ public class AuthController {
         Spark.port(8080);
         log.info("Сервер запущен на порту 8080");
 
-        // Настройка FreeMarker (без spark-template-freemarker)
+        // Настройка FreeMarker
         Configuration freeMarkerConfig = new Configuration(Configuration.VERSION_2_3_31);
         freeMarkerConfig.setClassForTemplateLoading(AuthController.class, "/templates");
         freeMarkerConfig.setDefaultEncoding("UTF-8");
