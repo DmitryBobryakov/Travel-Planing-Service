@@ -3,14 +3,12 @@ package org.tps.autorization;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class AuthControllerTest {
-
     private static final String BASE_URI = "http://localhost";
-    private static final int PORT = 4567;
+    private static final int PORT = 8080;
     private static final String LOGIN_ENDPOINT = "/login";
     private static final String REGISTER_ENDPOINT = "/register";
     private static final String VALID_USERNAME = "testuser";

@@ -90,10 +90,22 @@
 
         <!-- RestAssured для тестирования HTTP-запросов -->
         <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>2.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>5.3.0</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- H2 для тестирования базы данных -->
@@ -103,6 +115,14 @@
             <version>2.1.214</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Freemarker для Frontend -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.31</version>
+        </dependency>
+
 
     </dependencies>
 </project>

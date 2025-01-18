@@ -1,47 +1,94 @@
 package org.tps.autorization;
 
-import org.junit.jupiter.api.Assertions;
+import org.h2.jdbcx.JdbcDataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.h2.jdbcx.JdbcDataSource;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.Optional;
 
-class UserDaoTest {
-    private static final String VALID_USERNAME = "testuser";
-    private static final String PASSWORD = "1234";
-    private static final String EMAIL = "test@example.com";
-    private static final String PHONE = "998905304433";
-    private static final String DB_URL = "jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1";
-    private static final String SQL_REQUEST = "CREATE TABLE user_data (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), password VARCHAR(255), email VARCHAR(255), phone VARCHAR(255))";
+import static org.junit.jupiter.api.Assertions.*;
 
+public class UserDaoTest {
     private UserDao userDao;
 
     @BeforeEach
     public void setup() {
         JdbcDataSource dataSource = new JdbcDataSource();
-        dataSource.setURL(DB_URL);
+        dataSource.setURL("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
         dataSource.setUser("sa");
         dataSource.setPassword("");
 
         userDao = new UserDao(dataSource);
 
-        // Initialize schema
-        try (var connection = dataSource.getConnection();
-             var statement = connection.createStatement()) {
-            statement.execute(SQL_REQUEST);
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement()) {
+            // Очистка таблицы перед каждым тестом для избежания конфликтов
+            statement.execute("DROP TABLE IF EXISTS user_data");
+
+            statement.execute("CREATE TABLE user_data (" +
+                    "id INT AUTO_INCREMENT PRIMARY KEY, " +
+                    "username VARCHAR(50) UNIQUE NOT NULL, " +
+                    "password VARCHAR(255) NOT NULL, " +
+                    "email VARCHAR(100) UNIQUE NOT NULL, " +
+                    "phoneNumber VARCHAR(20))");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Test
-    public void testSaveUser() {
-        User user = new User(0, VALID_USERNAME, PASSWORD, EMAIL, PHONE);
+    public void testSaveAndRetrieveUser() {
+        // Создаём пользователя
+        User user = new User(0, "testuser", "hashedPassword", "test@example.com", "1234567890");
+
+        // Сохраняем пользователя в базе данных
         userDao.saveUser(user);
 
-        Optional<User> retrievedUser = userDao.getUserByUsername(VALID_USERNAME);
+        // Извлекаем пользователя по имени пользователя
+        Optional<User> retrievedUser = userDao.getUserByUsername("testuser");
 
-        Assertions.assertTrue(retrievedUser.isPresent());
-        Assertions.assertEquals(VALID_USERNAME, retrievedUser.get().getUsername());
+        // Проверяем, что пользователь был найден
+        assertTrue(retrievedUser.isPresent(), "Пользователь не найден в базе данных");
+
+        // Проверяем, что данные пользователя совпадают
+        User actualUser = retrievedUser.get();
+        assertEquals("testuser", actualUser.getUsername(), "Имя пользователя не совпадает");
+        assertEquals("hashedPassword", actualUser.getPassword(), "Пароль не совпадает");
+        assertEquals("test@example.com", actualUser.getEmail(), "Email не совпадает");
+        assertEquals("1234567890", actualUser.getPhoneNumber(), "Номер телефона не совпадает");
+    }
+
+    @Test
+    public void testGetUserByNonExistentUsername() {
+        // Пытаемся получить пользователя, которого нет в базе данных
+        Optional<User> retrievedUser = userDao.getUserByUsername("nonexistent");
+
+        // Проверяем, что пользователь не найден
+        assertFalse(retrievedUser.isPresent(), "Найден несуществующий пользователь");
+    }
+
+    @Test
+    public void testSaveUserWithDuplicateUsername() {
+        // Создаём и сохраняем первого пользователя
+        User user1 = new User(0, "duplicateUser", "password1", "user1@example.com", "1111111111");
+        userDao.saveUser(user1);
+
+        // Создаём второго пользователя с тем же именем пользователя
+        User user2 = new User(0, "duplicateUser", "password2", "user2@example.com", "2222222222");
+
+        // Пытаемся сохранить второго пользователя и ожидаем исключение или логирование ошибки
+        // В данном случае, метод saveUser не выбрасывает исключение, а только логирует ошибку
+        // Поэтому мы проверим, что второй пользователь не был сохранён
+        userDao.saveUser(user2);
+
+        // Извлекаем пользователя по имени пользователя
+        Optional<User> retrievedUser = userDao.getUserByUsername("duplicateUser");
+
+        // Проверяем, что пользователь существует и соответствует первому пользователю
+        assertTrue(retrievedUser.isPresent(), "Пользователь с дублирующим именем не найден");
+        User actualUser = retrievedUser.get();
+        assertEquals("user1@example.com", actualUser.getEmail(), "Email пользователя должен соответствовать первому сохранённому пользователю");
     }
 }
+

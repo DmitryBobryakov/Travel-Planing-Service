@@ -14,22 +14,25 @@ import java.util.Optional;
 public class UserDao {
     private static final Logger log = LoggerFactory.getLogger(UserDao.class);
     private static final String GET_USER_BY_USERNAME_SQL = "SELECT * FROM user_data WHERE username = ?";
-    private static final String SAVE_USER_SQL = "INSERT INTO user_data (username, password, email, phone) VALUES (?, ?, ?, ?)";
+    private static final String SAVE_USER_SQL = "INSERT INTO user_data (username, password, email, phoneNumber) VALUES (?, ?, ?, ?)";
 
     private DataSource dataSource;
 
     public Optional<User> getUserByUsername(String username) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_USER_BY_USERNAME_SQL)) {
+
+            // Устанавливаем параметр перед выполнением запроса
+            statement.setString(1, username);
+
             try (ResultSet resultSet = statement.executeQuery()) {
-                statement.setString(1, username);
                 if (resultSet.next()) {
                     User user = new User(
-                          resultSet.getInt("id"),
-                          resultSet.getString("username"),
-                          resultSet.getString("password"),
-                          resultSet.getString("email"),
-                          resultSet.getString("phone")
+                            resultSet.getInt("id"),
+                            resultSet.getString("username"),
+                            resultSet.getString("password"),
+                            resultSet.getString("email"),
+                            resultSet.getString("phoneNumber")
                     );
                     return Optional.of(user);
                 }
@@ -46,10 +49,10 @@ public class UserDao {
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getEmail());
-            statement.setString(4, user.getPhone());
+            statement.setString(4, user.getPhoneNumber());
             statement.executeUpdate();
         } catch (SQLException e) {
-            log.error("Ошибка сохранения пользователя: " + user.getUsername(), e);;
+            log.error("Ошибка сохранения пользователя: {}", user.getUsername(), e);
         }
     }
 }
