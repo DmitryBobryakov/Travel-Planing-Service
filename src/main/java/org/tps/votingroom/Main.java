@@ -5,7 +5,10 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import org.flywaydb.core.Flyway;
 import org.tps.votingroom.controllers.VotingRoomController;
-import org.tps.votingroom.database.DataBaseService;
+import org.tps.votingroom.controllers.VotingRoomFreemarkerController;
+import org.tps.votingroom.html.TemplateFactory;
+import org.tps.votingroom.services.DataBaseService;
+import org.tps.votingroom.models.Application;
 import spark.Service;
 
 import java.util.List;
@@ -17,7 +20,7 @@ public class Main {
 
     Flyway flyway =
         Flyway.configure()
-            .locations("classpath:db/migrations")
+            .locations("classpath:db/migrations/v1")
             .dataSource(config.getString("app.database.url"), config.getString("app.database.user"),
                 config.getString("app.database.password"))
             .load();
@@ -33,6 +36,12 @@ public class Main {
                 service,
                 dataBaseService,
                 objectMapper
+            ),
+            new VotingRoomFreemarkerController(
+                service,
+                dataBaseService,
+                objectMapper,
+                TemplateFactory.freeMarkerEngine()
             )
         )
     );

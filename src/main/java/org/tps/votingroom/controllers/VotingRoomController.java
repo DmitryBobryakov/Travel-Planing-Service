@@ -2,13 +2,13 @@ package org.tps.votingroom.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.tps.votingroom.database.VotingRoomInf;
+import org.tps.votingroom.models.VotingRoomInfo;
 import org.tps.votingroom.exceptions.AlreadyExistingException;
-import org.tps.votingroom.requests.EndVoteRequest;
-import org.tps.votingroom.requests.FindFriendsRequest;
-import org.tps.votingroom.requests.VoteRequest;
-import org.tps.votingroom.responses.AppendingToRoomResponse;
-import org.tps.votingroom.database.DataBaseService;
+import org.tps.votingroom.models.requests.EndVoteRequest;
+import org.tps.votingroom.models.requests.FindFriendsRequest;
+import org.tps.votingroom.models.requests.VoteRequest;
+import org.tps.votingroom.models.responses.AppendingToRoomResponse;
+import org.tps.votingroom.services.DataBaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Request;
@@ -56,10 +56,10 @@ public class VotingRoomController implements Controller {
             return objectMapper.writeValueAsString(e.getMessage());
           }
 
-          VotingRoomInf votingRoomInf;
+          VotingRoomInfo votingRoomInfo;
 
           try {
-            votingRoomInf = dataBaseService.getVotingRoomInfo(votingRoomId);
+            votingRoomInfo = dataBaseService.getVotingRoomInfo(votingRoomId);
           } catch (SQLException e) {
             response.status(404);
             LOG.error("Cannot find room with id={}", votingRoomId);
@@ -68,7 +68,7 @@ public class VotingRoomController implements Controller {
 
           response.status(200);
           LOG.debug("Successfully retrieved room with id={}", votingRoomId);
-          return objectMapper.writeValueAsString(votingRoomInf);
+          return objectMapper.writeValueAsString(votingRoomInfo);
         }
     );
   }
@@ -89,17 +89,17 @@ public class VotingRoomController implements Controller {
             return objectMapper.writeValueAsString(e.getMessage());
           }
 
-          VotingRoomInf votingRoomInf;
+          VotingRoomInfo votingRoomInfo;
 
           try {
-            votingRoomInf = dataBaseService.getVotingRoomInfo(votingRoomId);
+            votingRoomInfo = dataBaseService.getVotingRoomInfo(votingRoomId);
           } catch (SQLException e) {
             response.status(404);
             LOG.error("Cannot find room with id={}", votingRoomId);
             return objectMapper.writeValueAsString(e.getMessage());
           }
 
-          if (votingRoomInf.state() == 0) {
+          if (votingRoomInfo.getState() == 0) {
             response.status(409);
             LOG.error("Vote is ended");
             return objectMapper.writeValueAsString("Vote is ended");
@@ -108,12 +108,13 @@ public class VotingRoomController implements Controller {
             VoteRequest voteRequest = objectMapper.readValue(body, VoteRequest.class);
 
             Integer position = voteRequest.numberOfVariant();
-            Integer previousValue = votingRoomInf.variantsInterestRate().get(position - 1);
+            Integer previousValue = votingRoomInfo.getVariantsInterestRate().get(position - 1);
 
             dataBaseService.updateInterestRate(votingRoomId, previousValue, position);
+            votingRoomInfo = dataBaseService.getVotingRoomInfo(votingRoomId);
             response.status(200);
-            LOG.debug("Successfully vote for variant={}" + " in room with id={}", voteRequest.numberOfVariant(), votingRoomId);
-            return objectMapper.writeValueAsString(votingRoomInf);
+            LOG.debug("Successfully vote for variant={} in room with id={}", voteRequest.numberOfVariant(), votingRoomId);
+            return objectMapper.writeValueAsString(votingRoomInfo);
           }
         }
     );
@@ -168,26 +169,26 @@ public class VotingRoomController implements Controller {
             return objectMapper.writeValueAsString(e.getMessage());
           }
 
-          VotingRoomInf votingRoomInf;
+          VotingRoomInfo votingRoomInfo;
 
           try {
-            votingRoomInf = dataBaseService.getVotingRoomInfo(votingRoomId);
+            votingRoomInfo = dataBaseService.getVotingRoomInfo(votingRoomId);
           } catch (SQLException e) {
             response.status(404);
             LOG.error("Cannot find room with id={}", votingRoomId);
             return objectMapper.writeValueAsString(e.getMessage());
           }
 
-          if (votingRoomInf.state() == 0) {
-            response.status(409);
+          if (votingRoomInfo.getState() == 0) {
+            response.status(400);
             LOG.error("Vote is ended");
-            return objectMapper.writeValueAsString("vote is ended");
+            return objectMapper.writeValueAsString("Vote is ended");
           } else {
             try {
               dataBaseService.appendFriendToRoom(friendId, votingRoomId);
             } catch (AlreadyExistingException e) {
               response.status(400);
-              LOG.error("User with id = {} already exists", friendId, e);
+              LOG.error("User with id = {} already exists in room with id = {}", friendId, votingRoomId, e);
               return objectMapper.writeValueAsString(e.getMessage());
             }
 
@@ -215,10 +216,10 @@ public class VotingRoomController implements Controller {
             return objectMapper.writeValueAsString(e.getMessage());
           }
 
-          VotingRoomInf votingRoomInf;
+          VotingRoomInfo votingRoomInfo;
 
           try {
-            votingRoomInf = dataBaseService.getVotingRoomInfo(votingRoomId);
+            votingRoomInfo = dataBaseService.getVotingRoomInfo(votingRoomId);
           } catch (SQLException e) {
             response.status(404);
             LOG.error("Cannot find room with id={}", votingRoomId);
@@ -232,13 +233,13 @@ public class VotingRoomController implements Controller {
             endVoteRequest = objectMapper.readValue(body, EndVoteRequest.class);
           } catch (JsonProcessingException e) {
             response.status(400);
-            LOG.error("Incorrect input data format");
+            LOG.error("Incorrect input data format: {}", body);
             return objectMapper.writeValueAsString(e.getMessage());
           }
 
           Integer userId = endVoteRequest.id();
 
-          if (!userId.equals(votingRoomInf.ownerId())) {
+          if (!userId.equals(votingRoomInfo.getOwnerId())) {
             response.status(403);
             LOG.error("Cannot end vote");
             return objectMapper.writeValueAsString("You cannot end this vote");
