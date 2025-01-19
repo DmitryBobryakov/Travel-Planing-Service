@@ -10,24 +10,24 @@
         }
     </script>
     <style>
+        /* --- Ваши стили для контейнера с путешествиями --- */
         #trip-container {
             margin-top: 20px;
             border: 1px solid #ccc;
             padding: 10px;
             width: 300px;
         }
-    </style>
-    <title>${title}</title>
-    <style>
+
         body {
             text-align: center; /* Центрируем текст по горизонтали */
             margin: 0;
             padding: 0;
-            height: 100vh; /* Высота страницы */
+            min-height: 100vh; /* Чтобы страница тянулась по высоте */
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Центрируем по вертикали */
+            /* Не обязательно центрировать всё по вертикали, иначе фон может стать слишком маленьким */
         }
+
         table {
             border-collapse: collapse;
             width: 100%;
@@ -41,21 +41,8 @@
         th {
             background-color: #f2f2f2;
         }
-    </style>
-    <script>
-        // Функция для добавления текста в контейнер
-        function addText() {
-            // Получаем текст из label
-            var labelText = document.getElementById("website_trip").value;
-            // Создаем новый элемент для отображения текста
-            var newTextElement = document.createElement("p");
-            newTextElement.innerText = labelText;
-            // Добавляем новый элемент на страницу
-            document.getElementById("trip-container").appendChild(newTextElement);
-        }
-    </script>
-    <style>
-        /* Стили для модального окна */
+
+        /* --- Стили для модального окна выбора друзей --- */
         .choise_friends_window {
             display: none; /* Скрыто по умолчанию */
             position: fixed; /* Фиксированное положение */
@@ -67,29 +54,39 @@
             overflow: auto; /* Прокрутка, если необходимо */
             background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
         }
-
-        /* Стили для содержимого модального окна */
         .choise_friends_window-content {
             background-color: #fefefe;
-            margin: 15% auto; /* Центрирование */
+            margin: 15% auto; /* Центрирование по горизонтали */
             padding: 20px;
             border: 1px solid #888;
             width: 80%; /* Ширина окна */
         }
-
-        /* Кнопка закрытия */
         .close {
             color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
+            cursor: pointer;
         }
-
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
-            cursor: pointer;
+        }
+
+        /* --- Главный блок с фоновым изображением --- */
+        .hero-section {
+            /* Путь к картинке: подстройте, если нужно, в зависимости от того, 
+               как у вас отдаются статические файлы. */
+            background-image: url("/images/image.png");
+            background-size: cover;         /* Масштабируем под блок */
+            background-position: center;    /* Центрируем картинку */
+            background-repeat: no-repeat;   /* Без повторов */
+            padding: 60px 20px;            /* Отступы внутри блока */
+            margin-bottom: 20px;           /* Небольшой отступ снизу */
+        }
+        .hero-section h1 {
+            color: #fff; /* Цвет текста поверх картинки (при желании) */
         }
     </style>
     <script>
@@ -113,42 +110,21 @@
     </script>
 </head>
 <body>
-<h1>${title}</h1>
-<h2>
-    <label for="date_finish">..................................................</label>
-</h2>
-<h2>
-    <form action="/startVoting" method="GET">
-        <button type="submit">Начать голосование</button>
-    </form>
-</h2>
-<h2>
-    <label for="date_finish">..................................................</label>
-</h2>
 
-<h2>Текущие комнаты</h2>
-<table>
-    <thead>
-    <tr>
-        <th>Название комнаты</th>
-        <th>Страна и даты поездки</th>
-        <th>Участники</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th>Друзья</th>
-        <th>Китай, 09.11-19.11</th>
-        <th>Ааа, Ббб, Ссс</th>
-    </tr>
-    </tbody>
-    <tbody>
-    <tr>
-        <th>Семья</th>
-        <th>Италия, 6.01-15.02</th>
-        <th>Ккк, Ддд, Иии, Ццц, Ссс</th>
-    </tr>
-    </tbody>
-</table>
-</body>
-</html>
+<!-- Контейнер с фоновым изображением: от заголовка до кнопки "Начать голосование" -->
+<div class="hero-section">
+    <h1>${title}</h1>
+
+    <h2>
+        <!-- Просто пример контента: можно убрать или переименовать -->
+        <label for="date_finish">..................................................</label>
+    </h2>
+
+    <h2>
+        <form action="/startVoting" method="GET">
+            <button type="submit">Начать голосование</button>
+        </form>
+    </h2>
+
+    <h2>
+        <label for="date_finish">..................................................<
