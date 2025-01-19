@@ -127,4 +127,43 @@
     </h2>
 
     <h2>
-        <label for="date_finish">..................................................<
+        <label for="date_finish">..................................................</label>
+    </h2>
+</div>
+
+<h2>Текущие комнаты</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Название комнаты</th>
+        <th>Страна и даты поездки</th>
+        <th>Участники</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>Друзья</th>
+        <th>Китай, 09.11-19.11</th>
+        <th>Ааа, Ббб, Ссс</th>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <th>Семья</th>
+        <th>Италия, 6.01-15.02</th>
+        <th>Ккк, Ддд, Иии, Ццц, Ссс</th>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Пример: модальное окно (если нужно) -->
+<div id="choise_friends_window" class="choise_friends_window">
+    <div class="choise_friends_window-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Здесь, например, список друзей</h2>
+        <!-- Ваш контент для выбора друзей -->
+    </div>
+</div>
+
+</body>
+</html>
