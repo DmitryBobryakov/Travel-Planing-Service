@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  tps_service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tps_service_container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: JavaMTS
+      POSTGRES_DB: auth_service
+    ports:
+      - "8080:8080" # Приложение
+      - "5438:5432" # PostgreSQL
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
+
