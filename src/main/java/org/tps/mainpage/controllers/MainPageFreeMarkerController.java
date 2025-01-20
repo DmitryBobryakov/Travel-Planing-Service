@@ -26,6 +26,7 @@ public class MainPageFreeMarkerController implements Controller {
       Template template = freeMarkerConfig.getTemplate("MainPage.ftl");
       Map<String, Object> model = new HashMap<>();
       model.put("title", "Сервис планирования совместного путешествия");
+
       try (StringWriter writer = new StringWriter()) {
         template.process(model, writer);
         return writer.toString();
