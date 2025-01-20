@@ -3,152 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Pagе. Часть Ангелины</title>
-    <script>
-        function reloadPage() {
-            window.location.reload(); // Перезагрузить текущую страницу
-        }
-    </script>
+    <title>Сервис по планированию путешествий</title>
     <style>
-        #trip-container {
-            margin-top: 20px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            width: 300px;
-        }
-    </style>
-    <title>${title}</title>
-    <style>
+        /* Основные стили */
         body {
-            text-align: center; /* Центрируем текст по горизонтали */
+            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            height: 100vh; /* Высота страницы */
+            padding: 0; /* Закреплённый фон */
+            background-size: cover; /* Масштабирование */
+            color: #333333; /* Цвет текста */
+        }
+
+        header {
+            background: url('../images/image.jpg'); /* Белый фон с прозрачностью */
+            height: 300px;
+            position: relative;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Центрируем по вертикали */
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 20px; /* Отступ сверху для таблицы */
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
-    <script>
-        // Функция для добавления текста в контейнер
-        function addText() {
-            // Получаем текст из label
-            var labelText = document.getElementById("website_trip").value;
-            // Создаем новый элемент для отображения текста
-            var newTextElement = document.createElement("p");
-            newTextElement.innerText = labelText;
-            // Добавляем новый элемент на страницу
-            document.getElementById("trip-container").appendChild(newTextElement);
-        }
-    </script>
-    <style>
-        /* Стили для модального окна */
-        .choise_friends_window {
-            display: none; /* Скрыто по умолчанию */
-            position: fixed; /* Фиксированное положение */
-            z-index: 1; /* На переднем плане */
-            left: 0;
-            top: 0;
-            width: 100%; /* Полная ширина */
-            height: 100%; /* Полная высота */
-            overflow: auto; /* Прокрутка, если необходимо */
-            background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            margin: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень для выделения */
         }
 
-        /* Стили для содержимого модального окна */
-        .choise_friends_window-content {
-            background-color: #fefefe;
-            margin: 15% auto; /* Центрирование */
+        header h1 {
+            background-image: url('../images/image.jpg');
+            color: #333333;
+            font-size: 2.5em;
+            text-align: center;
+            margin: 0 20px;
+        }
+
+        header .start-vote-btn {
+            background-color: #FF0032;
+            color: #FFFFFF;
+            font-weight: bold;
+            font-size: 1.2em;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        header .start-vote-btn:hover {
+            background-color: #CC0029;
+        }
+
+        main {
             padding: 20px;
-            border: 1px solid #888;
-            width: 80%; /* Ширина окна */
+            text-align: center;
         }
 
-        /* Кнопка закрытия */
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
+        h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.9); /* Прозрачный фон таблицы */
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #D9D9D9;
+        }
+
+        th {
+            background-color: #F2F2F2;
             font-weight: bold;
         }
 
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
+        td {
+            color: #555555;
+        }
+
+        .room-name {
+            font-weight: bold;
+            color: #333333;
+        }
+
+        .footer-label {
+            display: block;
+            margin-top: 40px;
+            color: #999999;
+            font-size: 0.9em;
         }
     </style>
-    <script>
-        // Функция для открытия модального окна
-        function openModal() {
-            document.getElementById("choise_friends_window").style.display = "block";
-        }
-
-        // Функция для закрытия модального окна
-        function closeModal() {
-            document.getElementById("choise_friends_window").style.display = "none";
-        }
-
-        // Закрытие модального окна при клике вне его
-        window.onclick = function(event) {
-            var modal = document.getElementById("choise_friends_window");
-            if (event.target === modal) {
-                closeModal();
-            }
-        }
-    </script>
 </head>
 <body>
-<h1>${title}</h1>
-<h2>
-    <label for="date_finish">..................................................</label>
-</h2>
-<h2>
-    <form action="/startVoting" method="GET">
-        <button type="submit">Начать голосование</button>
-    </form>
-</h2>
-<h2>
-    <label for="date_finish">..................................................</label>
-</h2>
 
-<h2>Текущие комнаты</h2>
-<table>
-    <thead>
-    <tr>
-        <th>Название комнаты</th>
-        <th>Страна и даты поездки</th>
-        <th>Участники</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th>Друзья</th>
-        <th>Китай, 09.11-19.11</th>
-        <th>Ааа, Ббб, Ссс</th>
-    </tr>
-    </tbody>
-    <tbody>
-    <tr>
-        <th>Семья</th>
-        <th>Италия, 6.01-15.02</th>
-        <th>Ккк, Ддд, Иии, Ццц, Ссс</th>
-    </tr>
-    </tbody>
-</table>
+<header>
+    <h1>Сервис по планированию совместного путешествия</h1>
+    <button class="start-vote-btn">Начать голосование</button>
+</header>
+
+<main>
+    <h2>Текущие комнаты</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Название комнаты</th>
+            <th>Страна и даты поездки</th>
+            <th>Участники</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="room-name">Друзья</td>
+            <td>Китай, 09.11-19.11</td>
+            <td>Ааа, Ббб, Ссс</td>
+        </tr>
+        <tr>
+            <td class="room-name">Семья</td>
+            <td>Италия, 6.01-15.02</td>
+            <td>Ккк, Ддд, Иии, Ццц, Ссс</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <label class="footer-label">Для добавления новой комнаты, воспользуйтесь кнопкой "Начать голосование".</label>
+</main>
+
 </body>
 </html>

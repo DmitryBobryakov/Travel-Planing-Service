@@ -7,6 +7,7 @@ import org.json.simple.parser.JSONParser;
 import org.tps.authorization.*;
 import org.tps.authorization.controllers.AuthController;
 import org.tps.authorization.controllers.AuthFreeMarkerController;
+import org.tps.creatingvotingroom.controllers.CreatingVotingRoomFreeMarkerController;
 import org.tps.mainpage.controllers.MainPageFreeMarkerController;
 import spark.Service;
 
@@ -37,7 +38,8 @@ public class Main {
             List.of(
                 new AuthController(userService, service),
                 new AuthFreeMarkerController(freeMarkerConfig, service),
-                new MainPageFreeMarkerController(freeMarkerConfig, service)));
+                new MainPageFreeMarkerController(freeMarkerConfig, service),
+                new CreatingVotingRoomFreeMarkerController(freeMarkerConfig, service)));
 
         application.start();
     }
