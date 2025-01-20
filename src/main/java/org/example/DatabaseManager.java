@@ -9,10 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseManager {
-    private String url = "jdbc:mysql://localhost:3306/your_database"; // Замените на ваш URL
-    private String user = "your_username"; // Замените на ваше имя пользователя
-    private String password = "your_password"; // Замените на ваш пароль
-
+    private String url = "jdbc:postgresql://localhost:5432/postgres"; 
+    private String user = "postgres"; 
+    private String password = "postgres";
     public List<Trip> getTrips() {
         List<Trip> trips = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, user, password);
