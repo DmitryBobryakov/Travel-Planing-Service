@@ -3,6 +3,7 @@ package org.example;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import spark.ModelAndView;
+import spark.Spark;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.sql.SQLException;
@@ -14,8 +15,11 @@ import static spark.Spark.get;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
+        Spark.staticFileLocation("static");
+        Spark.staticFiles.location("/static");
+
         FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine();
-        Configuration freeMarkerConfiguration = new Configuration();
+        Configuration freeMarkerConfiguration = new Configuration(Configuration.VERSION_2_3_26);
         freeMarkerConfiguration.setTemplateLoader(new ClassTemplateLoader(Main.class, "/"));
         freeMarkerEngine.setConfiguration(freeMarkerConfiguration);
 

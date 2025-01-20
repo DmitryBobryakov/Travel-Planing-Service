@@ -28,16 +28,19 @@
             flex-direction: column;
             justify-content: center; /* Центрируем по вертикали */
         }
+
         table {
             border-collapse: collapse;
             width: 100%;
             margin-top: 20px; /* Отступ сверху для таблицы */
         }
+
         th, td {
             border: 1px solid black;
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
         }
@@ -104,7 +107,7 @@
         }
 
         // Закрытие модального окна при клике вне его
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             var modal = document.getElementById("choise_friends_window");
             if (event.target === modal) {
                 closeModal();
@@ -117,38 +120,57 @@
 <h2>
     <label for="date_finish">..................................................</label>
 </h2>
-<h2>
-    <form action="/startVoting" method="GET">
-        <button type="submit">Начать голосование</button>
-    </form>
-</h2>
-<h2>
-    <label for="date_finish">..................................................</label>
-</h2>
 
-<h2>Текущие комнаты</h2>
-<table>
-    <thead>
-    <tr>
-        <th>Название комнаты</th>
-        <th>Страна и даты поездки</th>
-        <th>Участники</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th>Друзья</th>
-        <th>Китай, 09.11-19.11</th>
-        <th>Ааа, Ббб, Ссс</th>
-    </tr>
-    </tbody>
-    <tbody>
-    <tr>
-        <th>Семья</th>
-        <th>Италия, 6.01-15.02</th>
-        <th>Ккк, Ддд, Иии, Ццц, Ссс</th>
-    </tr>
-    </tbody>
-</table>
+<div style="
+    margin-left:auto;
+    margin-right:auto;
+    "
+>
+    <img src="images/background_picture.jpg" alt="Cannot load static image"
+         style="max-height: 50vh;"
+    />
+</div>
+
+<div style="
+    margin-top: -10vh;
+    "
+>
+    <h2>
+        <form action="/startVoting" method="GET">
+            <button type="submit">Начать голосование</button>
+        </form>
+    </h2>
+</div>
+
+<div>
+    <h2>
+        <label for="date_finish">..................................................</label>
+    </h2>
+
+    <h2>Текущие комнаты</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Название комнаты</th>
+            <th>Страна и даты поездки</th>
+            <th>Участники</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>Друзья</th>
+            <th>Китай, 09.11-19.11</th>
+            <th>Ааа, Ббб, Ссс</th>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+            <th>Семья</th>
+            <th>Италия, 6.01-15.02</th>
+            <th>Ккк, Ддд, Иии, Ццц, Ссс</th>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
