@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сервис по планированию путешествий</title>
+    <title>Main Page. Часть Ангелины</title>
     <style>
         /* Основные стили */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0; /* Закреплённый фон */
+            padding: 0;
+            background: url('images/background_picture.jpg') no-repeat center center fixed; /* Закреплённый фон */
             background-size: cover; /* Масштабирование */
             color: #333333; /* Цвет текста */
         }
 
         header {
-            background: url('../images/image.jpg'); /* Белый фон с прозрачностью */
+            background-color: rgba(255, 255, 255, 0.8); /* Белый фон с прозрачностью */
             height: 300px;
             position: relative;
             display: flex;
@@ -28,7 +29,6 @@
         }
 
         header h1 {
-            background-image: url('../images/image.jpg');
             color: #333333;
             font-size: 2.5em;
             text-align: center;
@@ -98,13 +98,70 @@
             color: #999999;
             font-size: 0.9em;
         }
+
+        /* Стили для модального окна */
+        .choise_friends_window {
+            display: none; /* Скрыто по умолчанию */
+            position: fixed; /* Фиксированное положение */
+            z-index: 1; /* На переднем плане */
+            left: 0;
+            top: 0;
+            width: 100%; /* Полная ширина */
+            height: 100%; /* Полная высота */
+            overflow: auto; /* Прокрутка, если необходимо */
+            background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+        }
+
+        .choise_friends_window-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
+    <script>
+        function reloadPage() {
+            window.location.reload();
+        }
+
+        // Функция для открытия модального окна
+        function openModal() {
+            document.getElementById("choise_friends_window").style.display = "block";
+        }
+
+        // Функция для закрытия модального окна
+        function closeModal() {
+            document.getElementById("choise_friends_window").style.display = "none";
+        }
+
+        // Закрытие модального окна при клике вне его
+        window.onclick = function (event) {
+            var modal = document.getElementById("choise_friends_window");
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
 </head>
 <body>
-
 <header>
     <h1>Сервис по планированию совместного путешествия</h1>
-    <button class="start-vote-btn">Начать голосование</button>
+    <button class="start-vote-btn" onclick="reloadPage()">Начать голосование</button>
 </header>
 
 <main>
@@ -120,19 +177,16 @@
         <tbody>
         <tr>
             <td class="room-name">Друзья</td>
-            <td>Китай, 09.11-19.11</td>
-            <td>Ааа, Ббб, Ссс</td>
+            <td>Стамбул, 09.11-19.11</td>
+            <td>Бахар, Тимур, Эврен</td>
         </tr>
         <tr>
             <td class="room-name">Семья</td>
             <td>Италия, 6.01-15.02</td>
-            <td>Ккк, Ддд, Иии, Ццц, Ссс</td>
+            <td>Карен, Дима, Илья, Сева, Соня</td>
         </tr>
         </tbody>
     </table>
-
-    <label class="footer-label">Для добавления новой комнаты, воспользуйтесь кнопкой "Начать голосование".</label>
 </main>
-
 </body>
 </html>
