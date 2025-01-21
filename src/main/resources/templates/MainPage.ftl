@@ -116,7 +116,9 @@
 <body>
 <!-- Блок с изображением -->
 <div class="background-image">
-    <img src="images/image.jpg" alt="Cannot load static image">
+    <img src="/images/image.jpg" alt="Cannot load static image"
+         style="max-height: 50vh;"
+    />
 </div>
 
 <header>
