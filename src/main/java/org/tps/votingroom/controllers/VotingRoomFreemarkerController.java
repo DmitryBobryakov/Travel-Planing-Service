@@ -14,10 +14,7 @@ import spark.Service;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class VotingRoomFreemarkerController implements Controller {
 
@@ -71,7 +68,7 @@ public class VotingRoomFreemarkerController implements Controller {
           List<Integer> interestRate = votingRoomInfo.getVariantsInterestRate();
 
           Integer votingNumbers = 0;
-          for (int i = 0; i < interestRate.size() ; i++) {
+          for (int i = 0; i < interestRate.size(); i++) {
             votingNumbers += interestRate.get(i);
           }
 
@@ -80,8 +77,8 @@ public class VotingRoomFreemarkerController implements Controller {
             Map<String, String> map = new HashMap<>();
             map.put("name", names.get(i));
             map.put("count", String.valueOf(interestRate.get(i)));
-            map.put("interest", String.valueOf(100.0*interestRate.get(i)/votingNumbers));
-            map.put("number", String.valueOf((i+1)));
+            map.put("interest", String.format(Locale.US, "%.2f", 100.0 * interestRate.get(i) / votingNumbers));
+            map.put("number", String.valueOf((i + 1)));
             modelVariants.add(map);
           }
 

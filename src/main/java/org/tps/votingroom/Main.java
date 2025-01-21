@@ -7,8 +7,8 @@ import org.flywaydb.core.Flyway;
 import org.tps.votingroom.controllers.VotingRoomController;
 import org.tps.votingroom.controllers.VotingRoomFreemarkerController;
 import org.tps.votingroom.html.TemplateFactory;
-import org.tps.votingroom.services.DataBaseService;
 import org.tps.votingroom.models.Application;
+import org.tps.votingroom.services.DataBaseService;
 import spark.Service;
 
 import java.util.List;

@@ -2,15 +2,15 @@ package org.tps.votingroom.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.tps.votingroom.models.VotingRoomInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tps.votingroom.exceptions.AlreadyExistingException;
+import org.tps.votingroom.models.VotingRoomInfo;
 import org.tps.votingroom.models.requests.EndVoteRequest;
 import org.tps.votingroom.models.requests.FindFriendsRequest;
 import org.tps.votingroom.models.requests.VoteRequest;
 import org.tps.votingroom.models.responses.AppendingToRoomResponse;
 import org.tps.votingroom.services.DataBaseService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 import spark.Service;

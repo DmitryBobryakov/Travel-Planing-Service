@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import static org.tps.votingroom.models.SqlQuery.*;
 
 public class DataBaseService {
@@ -23,9 +24,9 @@ public class DataBaseService {
     User user = new User(null, null, null, null);
 
     try (Connection connection = dataSource.getConnection();
-    PreparedStatement preparedStatement = connection.prepareStatement(
-        "SELECT * FROM \"user\" WHERE id = " + userId
-    ) ) {
+         PreparedStatement preparedStatement = connection.prepareStatement(
+             "SELECT * FROM \"user\" WHERE id = " + userId
+         )) {
       try (ResultSet resultSet = preparedStatement.executeQuery()) {
         while (resultSet.next()) {
           user.setId(resultSet.getInt("id"));
@@ -138,13 +139,18 @@ public class DataBaseService {
           throw new AlreadyExistingException("User with id " + friendId + " already exists");
         }
 
-        friendsIds.add(friendId);
+        List<Integer> newFriendsIds = new ArrayList<>();
+        for (Integer id : friendsIds) {
+          newFriendsIds.add(id);
+        }
+        newFriendsIds.add(friendId);
+        Array sqlArray = connection.createArrayOf("integer", newFriendsIds.toArray());
 
         try (Connection newConnection = dataSource.getConnection();
              PreparedStatement newPreparedStatement = newConnection.prepareStatement(
                  UPDATE_PARTICIPANTS_ID.getQuery())) {
-          preparedStatement.setArray(1, (Array) friendsIds);
-          preparedStatement.setInt(2, roomId);
+          newPreparedStatement.setArray(1, sqlArray);
+          newPreparedStatement.setInt(2, roomId);
           newPreparedStatement.executeUpdate();
         }
       }

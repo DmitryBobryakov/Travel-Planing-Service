@@ -1,3 +1,4 @@
 package org.tps.votingroom.models.requests;
 
-public record VoteRequest (Integer numberOfVariant) {}
+public record VoteRequest(Integer numberOfVariant) {
+}
