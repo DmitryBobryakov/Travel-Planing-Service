@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Друзья</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Ваши друзья</h1>
+        <ul class="friends-list" id="friends">
+            <li>бла бла бла</li>
+        </ul>
+        <div class="nav">
+            <a href="/profile.html" class="button">Обратно в свой профиль</a>
+            <a href="/index.html" class="button">На главную</a>
+        </div>
+    </div>
+
+    <script>
+        fetch('/friends/1')
+            .then(response => response.json())
+            .then(data => {
+                const friendsList = document.getElementById('friends');
+                friendsList.innerHTML = '';
+                data.forEach(friend => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        <span>Friend ID: ${friend.friendId}</span>
+                        <a href="/user/${friend.friendId}/profile" class="button">View Profile</a>
+                    `;
+                    friendsList.appendChild(listItem);
+                });
+            })
+            .catch(error => {
+                document.getElementById('friends').innerHTML = `<li>Error loading friends.</li>`;
+            });
+    </script>
+</body>
+</html>

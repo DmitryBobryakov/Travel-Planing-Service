@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль друга</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Профиль друга</h1>
+        <div class="profile-info" id="profile">
+            <p><strong>Имя:</strong> <span id="name">Loading...</span></p>
+            <p><strong>Почта:</strong> <span id="email">Loading...</span></p>
+        </div>
+        <div class="nav">
+            <a href="/friends.html" class="button">К списку друзей</a>
+            <a href="/index.html" class="button">На главную</a>
+        </div>
+    </div>
+
+    <script>
+        const friendId = window.location.pathname.split('/')[2];
+
+        fetch(`/user/${friendId}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('name').textContent = data.name;
+                document.getElementById('email').textContent = data.email;
+            })
+            .catch(error => {
+                document.getElementById('profile').innerHTML = `<p>Error loading friend profile.</p>`;
+            });
+    </script>
+</body>
+</html>

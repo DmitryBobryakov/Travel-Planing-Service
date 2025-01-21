@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Ваш профиль</h1>
+        <div class="profile-info" id="profile">
+            <p>загружаем...</p>
+        </div>
+        <div class="nav">
+            <a href="/friends.html" class="button">Список друзей</a>
+            <a href="/index.html" class="button">На главную</a>
+        </div>
+    </div>
+
+    <script>
+        fetch('/user/1')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('profile').innerHTML = `
+                    <p><strong>Name:</strong> ${data.name}</p>
+                    <p><strong>Email:</strong> ${data.email}</p>
+                `;
+            })
+            .catch(error => {
+                document.getElementById('profile').innerHTML = `<p>Error loading profile.</p>`;
+            });
+    </script>
+</body>
+</html>
