@@ -10,29 +10,42 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: url('images/background_picture.jpg') no-repeat center center fixed; /* Закреплённый фон */
-            background-size: cover; /* Масштабирование */
+            background-color: #FFFFFF; /* Белый фон */
             color: #333333; /* Цвет текста */
+        }
+
+        .background-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px; /* Высота блока */
+            margin: 20px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень */
+            max-width: 90%; /* Ограничение ширины */
+        }
+
+        .background-image img {
+            width: 100%; /* Заполняет всю ширину контейнера */
+            height: auto; /* Сохраняет пропорции */
+            object-fit: cover; /* Подгоняет изображение */
         }
 
         header {
             background-color: rgba(255, 255, 255, 0.8); /* Белый фон с прозрачностью */
-            height: 300px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            text-align: center;
+            padding: 20px;
             border-radius: 20px;
-            margin: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень для выделения */
+            margin: 20px auto;
+            max-width: 90%; /* Ограничение ширины */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень */
         }
 
         header h1 {
             color: #333333;
             font-size: 2.5em;
-            text-align: center;
-            margin: 0 20px;
+            margin: 0;
         }
 
         header .start-vote-btn {
@@ -98,70 +111,17 @@
             color: #999999;
             font-size: 0.9em;
         }
-
-        /* Стили для модального окна */
-        .choise_friends_window {
-            display: none; /* Скрыто по умолчанию */
-            position: fixed; /* Фиксированное положение */
-            z-index: 1; /* На переднем плане */
-            left: 0;
-            top: 0;
-            width: 100%; /* Полная ширина */
-            height: 100%; /* Полная высота */
-            overflow: auto; /* Прокрутка, если необходимо */
-            background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
-        }
-
-        .choise_friends_window-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
     </style>
-    <script>
-        function reloadPage() {
-            window.location.reload();
-        }
-
-        // Функция для открытия модального окна
-        function openModal() {
-            document.getElementById("choise_friends_window").style.display = "block";
-        }
-
-        // Функция для закрытия модального окна
-        function closeModal() {
-            document.getElementById("choise_friends_window").style.display = "none";
-        }
-
-        // Закрытие модального окна при клике вне его
-        window.onclick = function (event) {
-            var modal = document.getElementById("choise_friends_window");
-            if (event.target === modal) {
-                closeModal();
-            }
-        }
-    </script>
 </head>
 <body>
+<!-- Блок с изображением -->
+<div class="background-image">
+    <img src="images/image.jpg" alt="Cannot load static image">
+</div>
+
 <header>
     <h1>Сервис по планированию совместного путешествия</h1>
-    <button class="start-vote-btn" onclick="reloadPage()">Начать голосование</button>
+    <button class="start-vote-btn">Начать голосование</button>
 </header>
 
 <main>
